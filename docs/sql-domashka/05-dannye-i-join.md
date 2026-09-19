@@ -49,44 +49,117 @@ WHERE solders.rank_id = ranks.id;
 ```sql
 SELECT *
 FROM users u
-JOIN positions p ON u.position_id = p.id;
+JOIN positions pos ON u.position_id = pos.id;
 ```
 
 Результат одинаковый, но `JOIN ... ON` отделяет условие связи от фильтра
 `WHERE`. Когда таблиц пять, это критично для читаемости.
+
+## Как читать цепочку JOIN
+
+`JOIN` строит **одну широкую таблицу**, добавляя столбцы справа. Каждый новый
+`JOIN` приклеивает строки новой таблицы к тому, что уже собрано.
+
+!!! note "Главное правило"
+    `ON` всегда связывает **новую** таблицу (ту, что в этом `JOIN`) с **уже
+    подключённой** (любой слева). Таблицу нельзя прицепить к той, которой ещё нет
+    в запросе.
+
+Прогоним цепочку на данных из урока. Алиасы: `u` — `users`, `pos` — `positions`,
+`p` — `packs`, `et` — `equipment_types`, `par` — `parameters`.
+
+**Шаг 0. `FROM users u`** — основа запроса:
+
+| u.id | full_name | position_id |
+|---|---|---|
+| 1 | Иванов Иван | 1 |
+| 2 | Петров Пётр | 2 |
+| 3 | Сидорова Анна | 3 |
+
+**Шаг 1. `JOIN positions pos ON u.position_id = pos.id`** — для каждой строки
+ищем должность, где `pos.id = u.position_id`:
+
+| u.id | full_name | pos.name |
+|---|---|---|
+| 1 | Иванов Иван | Оператор |
+| 2 | Петров Пётр | Механик |
+| 3 | Сидорова Анна | Инженер |
+
+**Шаг 2. `JOIN packs p ON p.user_id = u.id`** — приклеиваем пачки пользователя:
+
+| u.id | full_name | pos.name | p.id | p.equipment_type_id |
+|---|---|---|---|---|
+| 1 | Иванов Иван | Оператор | 1 | 1 |
+| 2 | Петров Пётр | Механик | 2 | 1 |
+| 3 | Сидорова Анна | Инженер | 3 | 2 |
+
+**Шаг 3. `JOIN equipment_types et ON p.equipment_type_id = et.id`** — по коду
+типа достаём название:
+
+| u.id | p.id | et.name |
+|---|---|---|
+| 1 | 1 | Насос |
+| 2 | 2 | Насос |
+| 3 | 3 | Компрессор |
+
+**Шаг 4. `JOIN parameters par ON par.equipment_type_id = et.id`** — параметры
+крепятся **к типу**, а не к пачке. У «Насоса» два параметра, поэтому строки
+размножаются:
+
+| p.id | et.name | par.name |
+|---|---|---|
+| 1 | Насос | Давление |
+| 1 | Насос | Расход |
+| 2 | Насос | Давление |
+| 2 | Насос | Расход |
+| 3 | Компрессор | Мощность |
+
+Итог — 5 строк. Это и есть результат запроса.
+
+!!! tip "Как писать самому"
+    Иди по цепочке вопросами: «как из `users` добраться до `positions`?» →
+    `u.position_id = pos.id`. «как из `users` до `packs`?» → `p.user_id = u.id`.
+    «как из `packs` до `equipment_types`?» → `p.equipment_type_id = et.id`.
+    «как из `equipment_types` до `parameters`?» → `par.equipment_type_id = et.id`.
+    Каждый ответ — один `JOIN`.
 
 ## JOIN всех пяти таблиц
 
 ```sql
 SELECT u.id           AS user_id,
        u.full_name,
-       p.name         AS position,
-       pk.id          AS pack_id,
-       pk.created_on,
-       pk.quantity,
+       pos.name       AS position,
+       p.id           AS pack_id,
+       p.created_on,
+       p.quantity,
        et.name        AS equipment_type,
-       pr.name        AS parameter,
-       pr.unit
+       par.name       AS parameter,
+       par.unit
 FROM users u
-JOIN positions p        ON u.position_id = p.id
-JOIN packs pk           ON pk.user_id = u.id
-JOIN equipment_types et ON pk.equipment_type_id = et.id
-JOIN parameters pr      ON pr.equipment_type_id = et.id
-ORDER BY u.id, pk.id, pr.id;
+JOIN positions pos       ON u.position_id = pos.id
+JOIN packs p             ON p.user_id = u.id
+JOIN equipment_types et  ON p.equipment_type_id = et.id
+JOIN parameters par      ON par.equipment_type_id = et.id
+ORDER BY u.id, p.id, par.id;
 ```
 
 Разбор:
 
-- `u`, `p`, `pk`, `et`, `pr` — псевдонимы таблиц, чтобы не писать длинные имена;
+- `u`, `pos`, `p`, `et`, `par` — псевдонимы таблиц, чтобы не писать длинные имена
+  и различать одноимённые столбцы;
 - каждый `JOIN ... ON` цепляет следующую таблицу по ключу;
 - `AS user_id` переименовывает столбец в результате.
 
+!!! warning "Не путай псевдоним таблицы и префикс ключа"
+    `p` — это псевдоним `packs`. `pk_` в именах ограничений — это primary key.
+    Разные вещи. Поэтому в курсе `packs` — `p`, а не `pk`.
+
 ```mermaid
 flowchart LR
-    P[positions] -->|position_id| U[users]
-    U -->|user_id| PK[packs]
-    ET[equipment_types] -->|equipment_type_id| PK
-    ET -->|equipment_type_id| PR[parameters]
+    POS[positions] -->|position_id| U[users]
+    U -->|user_id| P[packs]
+    ET[equipment_types] -->|equipment_type_id| P
+    ET -->|equipment_type_id| PAR[parameters]
 ```
 
 ## Почему строк может стать больше
@@ -109,8 +182,12 @@ flowchart LR
     паре «внешний ключ → первичный ключ».
 
 !!! warning "Ошибка"
-    Взять `JOIN` вместо `LEFT JOIN` там, где строки без пары тоже нужны. Здесь
-    все пачки имеют пользователя и тип, поэтому обычного `JOIN` достаточно.
+    Соединить `parameters` с `packs` напрямую. Общего поля у них нет. Связь идёт
+    через `equipment_types`.
+
+!!! warning "Ошибка"
+    Использовать псевдоним, которого нет в `FROM`/`JOIN`. Если написал `pk.id`,
+    а таблица объявлена как `p`, СУБД скажет «unknown alias».
 
 ## Что дальше
 

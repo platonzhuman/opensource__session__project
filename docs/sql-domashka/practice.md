@@ -69,6 +69,24 @@
 
 **Требуется:** четыре команды по порядку.
 
+## Задание 10 (урок 5)
+
+Дан запрос:
+
+```sql
+SELECT u.full_name, pos.name, p.id, et.name, par.name
+FROM users u
+JOIN positions pos      ON u.position_id = pos.id
+JOIN packs p            ON p.user_id = u.id
+JOIN equipment_types et ON p.equipment_type_id = et.id
+JOIN parameters par     ON par.equipment_type_id = et.id;
+```
+
+Назови для каждого `JOIN`: какая таблица подключается, к какой уже подключённой
+и по какому полю. Объясни, почему `parameters` нельзя присоединить прямо к `packs`.
+
+**Требуется:** четыре пары «новая → уже есть» и причина для `parameters`.
+
 ## Самопроверка
 
 Выбери один вариант. Ответы и пояснения — в конце [ответов](answers.md).
@@ -105,9 +123,9 @@
 
 **6.** Какой `JOIN` нужен, чтобы соединить `users` и `positions` по ключу?
 
-- [ ] `JOIN positions p ON u.position_id = p.id`
-- [ ] `JOIN positions p WHERE u.position_id = p.id`
-- [ ] `JOIN positions p ON u.id = p.id`
+- [ ] `JOIN positions pos ON u.position_id = pos.id`
+- [ ] `JOIN positions pos WHERE u.position_id = pos.id`
+- [ ] `JOIN positions pos ON u.id = pos.id`
 
 **7.** Почему строк в результате JOIN может стать больше, чем в одной таблице?
 

@@ -93,19 +93,19 @@ INSERT INTO packs (id, user_id, equipment_type_id, created_on, quantity) VALUES
 -- 4. Проверка: объединение всех таблиц (для скриншота)
 SELECT u.id           AS user_id,
        u.full_name,
-       p.name         AS position,
-       pk.id          AS pack_id,
-       pk.created_on,
-       pk.quantity,
+       pos.name       AS position,
+       p.id           AS pack_id,
+       p.created_on,
+       p.quantity,
        et.name        AS equipment_type,
-       pr.name        AS parameter,
-       pr.unit
+       par.name       AS parameter,
+       par.unit
 FROM users u
-JOIN positions p        ON u.position_id = p.id
-JOIN packs pk           ON pk.user_id = u.id
-JOIN equipment_types et ON pk.equipment_type_id = et.id
-JOIN parameters pr      ON pr.equipment_type_id = et.id
-ORDER BY u.id, pk.id, pr.id;
+JOIN positions pos       ON u.position_id = pos.id
+JOIN packs p             ON p.user_id = u.id
+JOIN equipment_types et  ON p.equipment_type_id = et.id
+JOIN parameters par      ON par.equipment_type_id = et.id
+ORDER BY u.id, p.id, par.id;
 ```
 
 ## Соответствие имён

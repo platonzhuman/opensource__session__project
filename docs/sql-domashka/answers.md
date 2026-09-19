@@ -144,23 +144,24 @@ INSERT INTO packs (id, user_id, equipment_type_id, created_on, quantity) VALUES
 ```sql
 SELECT u.id           AS user_id,
        u.full_name,
-       p.name         AS position,
-       pk.id          AS pack_id,
-       pk.created_on,
-       pk.quantity,
+       pos.name       AS position,
+       p.id           AS pack_id,
+       p.created_on,
+       p.quantity,
        et.name        AS equipment_type,
-       pr.name        AS parameter,
-       pr.unit
+       par.name       AS parameter,
+       par.unit
 FROM users u
-JOIN positions p        ON u.position_id = p.id
-JOIN packs pk           ON pk.user_id = u.id
-JOIN equipment_types et ON pk.equipment_type_id = et.id
-JOIN parameters pr      ON pr.equipment_type_id = et.id
-ORDER BY u.id, pk.id, pr.id;
+JOIN positions pos       ON u.position_id = pos.id
+JOIN packs p             ON p.user_id = u.id
+JOIN equipment_types et  ON p.equipment_type_id = et.id
+JOIN parameters par      ON par.equipment_type_id = et.id
+ORDER BY u.id, p.id, par.id;
 ```
 
-Почему так: четыре `JOIN` соединяют пять таблиц в одну цепочку. Псевдонимы
-сокращают имена. `ORDER BY` делает результат читаемым.
+Почему так: четыре `JOIN` соединяют пять таблиц в одну цепочку. Каждый `JOIN`
+цепляет новую таблицу к уже подключённой по паре «внешний ключ → первичный ключ».
+Псевдонимы сокращают имена. `ORDER BY` делает результат читаемым.
 
 !!! warning "Частая ошибка"
     Соединить `parameters` с `packs` напрямую. Общего ключа у них нет. Связь идёт
@@ -178,6 +179,21 @@ git push -u origin homework-sql
 Почему так: ветка создаётся до коммита, `push -u` публикует её и связывает с
 локальной. После этого на сервере можно открыть Pull Request.
 
+## Задание 10
+
+- `JOIN positions pos ON u.position_id = pos.id` — подключается `positions` к уже
+  есть `users` по `u.position_id = pos.id`.
+- `JOIN packs p ON p.user_id = u.id` — подключается `packs` к `users` по
+  `p.user_id = u.id`.
+- `JOIN equipment_types et ON p.equipment_type_id = et.id` — подключается
+  `equipment_types` к `packs` по `p.equipment_type_id = et.id`.
+- `JOIN parameters par ON par.equipment_type_id = et.id` — подключается
+  `parameters` к `equipment_types` по `par.equipment_type_id = et.id`.
+
+`parameters` нельзя присоединить прямо к `packs`: у них нет общего поля. Общий
+ключ есть только с `equipment_types` — `equipment_type_id`. Поэтому цепочка идёт
+через него.
+
 ## Ответы на самопроверку
 
 1. `PRIMARY KEY`. Ключ гарантирует уникальность и запрет пустых значений.
@@ -185,7 +201,7 @@ git push -u origin homework-sql
 3. В обратном порядке создания. Сначала дети, потом родители.
 4. Удаляет таблицу, если она есть, иначе ничего не делает.
 5. `UNIQUE` допускает `NULL`, ключ — нет.
-6. `JOIN positions p ON u.position_id = p.id`. Связь по паре «внешний ключ →
+6. `JOIN positions pos ON u.position_id = pos.id`. Связь по паре «внешний ключ →
    первичный ключ».
 7. Из-за связи «один ко многим» при соединении. Один тип оборудования с
    несколькими параметрами размножает строки.
