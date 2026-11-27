@@ -1,6 +1,6 @@
 site_name: Learning
 site_description: Один заход — одна домашка
-site_url: https://platonzhuman.github.io/opensource__session__project/
+site_url: !ENV [SITE_URL, "http://127.0.0.1:8010/"]
 docs_dir: docs
 
 copyright: Личный тренажёр для домашек

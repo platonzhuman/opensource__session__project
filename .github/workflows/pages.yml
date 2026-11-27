@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SITE_URL: https://platonzhuman.github.io/opensource__session__project/
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
