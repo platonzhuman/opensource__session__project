@@ -102,6 +102,7 @@ extra_css:
   - stylesheets/extra.css
   - stylesheets/playground.css
   - stylesheets/quiz.css
+  - stylesheets/service.css
   - stylesheets/mission.css
   - stylesheets/review.css
   - stylesheets/course-shell.css
