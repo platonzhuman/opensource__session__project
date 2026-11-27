@@ -4,6 +4,7 @@
   --lg-surface-strong: rgba(255, 255, 255, .88);
   --lg-border: rgba(255, 255, 255, .58);
   --lg-shadow: 0 18px 44px rgba(22, 42, 52, .12);
+  --lg-solid: #ffffff;
 }
 
 [data-md-color-scheme="slate"] {
@@ -11,6 +12,7 @@
   --lg-surface-strong: rgba(24, 38, 46, .9);
   --lg-border: rgba(255, 255, 255, .14);
   --lg-shadow: 0 20px 50px rgba(0, 0, 0, .34);
+  --lg-solid: #18262e;
 }
 
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -131,4 +133,24 @@
 }
 [data-md-color-scheme="default"] .learning-logout:hover {
   background: rgba(22, 38, 46, .14);
+}
+
+/* Пользователь просил меньше прозрачности: убираем blur и делаем плотный фон. */
+@media (prefers-reduced-transparency: reduce) {
+  .md-header,
+  .md-tabs,
+  .md-sidebar__inner,
+  .md-search__form,
+  .course-card,
+  .dash-card,
+  .review-deck,
+  .stat,
+  .mission,
+  .mission-step,
+  .md-typeset .admonition,
+  .md-typeset details {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: var(--lg-solid) !important;
+  }
 }
