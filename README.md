@@ -1,5 +1,7 @@
 # Learning
 
+**Сайт:** https://platonzhuman.github.io/opensource__session__project/
+
 Сайт курсов на MkDocs Material: SQL, анализ данных, ИИ, веб, практика и
 повторение.
 
