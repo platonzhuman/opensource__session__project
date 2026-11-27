@@ -71,16 +71,16 @@ hide:
 
   <div class="dash-card">
     <div class="dash-card__head">
-      <span class="dash-card__kicker">журнал</span>
-      <span class="pill pill--yellow">ошибки</span>
+      <span class="dash-card__kicker">записи</span>
+      <span class="pill pill--yellow">конспекты</span>
     </div>
-    <h2 class="dash-card__title">Не теряй ошибки</h2>
+    <h2 class="dash-card__title">Лекции под рукой</h2>
     <p class="dash-card__text">
-      В журнале собраны записи из шагов: что думал, что оказалось, как узнать
-      это в следующий раз.
+      Расшифровки лекций и практик по ИИ и анализу данных. Открывай, когда
+      нужно вернуться к формулировке или примеру.
     </p>
     <div class="row-actions">
-      <a class="button" href="journal/">Открыть журнал</a>
+      <a class="button" href="notes/">Открыть записи</a>
     </div>
   </div>
 </div>

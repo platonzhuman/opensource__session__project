@@ -7,7 +7,6 @@ copyright: Личный тренажёр для домашек
 
 theme:
   name: material
-  custom_dir: overrides
   language: ru
   logo: assets/logo.svg
   favicon: assets/favicon.svg
@@ -101,10 +100,8 @@ markdown_extensions:
 
 extra_css:
   - stylesheets/extra.css
-  - stylesheets/auth.css
   - stylesheets/playground.css
   - stylesheets/quiz.css
-  - stylesheets/service.css
   - stylesheets/mission.css
   - stylesheets/review.css
   - stylesheets/course-shell.css
@@ -113,13 +110,11 @@ extra_css:
   - stylesheets/course-palette.css
   - stylesheets/liquid-glass.css
   - stylesheets/motion.css
-  - stylesheets/farm.css
   - stylesheets/mssql-local.css
   - javascripts/vendor/codemirror/lib/codemirror.css
   - javascripts/vendor/codemirror/addon/hint/show-hint.css
 
 extra_javascript:
-  - javascripts/auth.js
   - javascripts/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
   - javascripts/vendor/codemirror/lib/codemirror.js
@@ -141,10 +136,8 @@ extra_javascript:
   - javascripts/course-shell.js
   - javascripts/practice-dock.js
   - javascripts/sandbox-tabs.js
-  - javascripts/journal.js
   - javascripts/audio-seek.js
   - javascripts/motion.js
-  - javascripts/farm.js
   - javascripts/course-cards.js
   - javascripts/mermaid-precapture.js
   - javascripts/vendor/mermaid/mermaid.min.js
@@ -220,9 +213,3 @@ nav:
           - "Анализ данных: Аномалии": learn/da/anomalies/index.md
   - Практика: sandbox/index.md
   - Повторение: review/index.md
-  - Журнал: journal/index.md
-  - Ещё:
-      - more/index.md
-      - "Blueprint сервиса": standards/service-blueprint/index.md
-      - Ферма: farm/index.md
-      - Архив курсов: archive/index.md
