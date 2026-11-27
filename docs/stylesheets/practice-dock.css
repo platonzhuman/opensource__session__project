@@ -1,0 +1,42 @@
+.practice-dock {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .55rem .85rem;
+  border: 1px solid rgba(28, 176, 246, .45);
+  border-radius: 999px;
+  background: var(--svc-card);
+  color: var(--svc-text) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .28);
+  font-size: .72rem;
+  font-weight: 900;
+  text-decoration: none !important;
+  transition: transform .12s ease, background .12s ease;
+}
+
+.practice-dock:hover {
+  transform: translateY(-2px);
+  background: var(--svc-card-2);
+}
+
+.practice-dock__mark {
+  display: grid;
+  width: 1.4rem;
+  height: 1.4rem;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(28, 176, 246, .18);
+  color: var(--svc-blue);
+  font-size: .75rem;
+}
+
+@media (max-width: 760px) {
+  .practice-dock {
+    right: .7rem;
+    bottom: .7rem;
+  }
+}

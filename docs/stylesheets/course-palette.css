@@ -1,0 +1,42 @@
+/* Палитра карточек курсов: загружается после app.css */
+.course-card {
+  --card-accent: #58cc02;
+  --card-accent-soft: rgba(88, 204, 2, .12);
+  border-left: 3px solid var(--card-accent);
+}
+
+.course-grid--ai .course-card,
+.course-card--ai { --card-accent: #7c5cff; --card-accent-soft: rgba(124, 92, 255, .14); }
+.course-grid--da .course-card,
+.course-card--da { --card-accent: #0f9f8f; --card-accent-soft: rgba(15, 159, 143, .14); }
+.course-grid--sql .course-card,
+.course-card--sql { --card-accent: #2f7de1; --card-accent-soft: rgba(47, 125, 225, .14); }
+.course-grid--web .course-card,
+.course-card--web { --card-accent: #d84f92; --card-accent-soft: rgba(216, 79, 146, .14); }
+.course-card--torch { --card-accent: #d98512; --card-accent-soft: rgba(217, 133, 18, .14); }
+
+.course-card:hover { border-color: var(--card-accent); }
+.course-card--featured {
+  border-color: var(--card-accent);
+  background: linear-gradient(145deg, var(--card-accent-soft), var(--svc-card) 66%);
+}
+.course-card__top .pill:last-child {
+  color: var(--card-accent);
+  border-color: color-mix(in srgb, var(--card-accent) 35%, transparent);
+}
+.course-card__meta b { color: var(--card-accent); }
+.course-card__facts {
+  margin-top: .55rem;
+  color: var(--svc-muted);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+@media (max-width: 520px) {
+  .course-grid { grid-template-columns: 1fr; }
+  .course-card { min-height: 0; }
+}
+
+/* карточка своего направления внутри чужой сетки */
+.course-grid--ai .course-card--da { --card-accent: #0f9f8f; --card-accent-soft: rgba(15, 159, 143, .14); }
+.course-grid--da .course-card--ai { --card-accent: #7c5cff; --card-accent-soft: rgba(124, 92, 255, .14); }

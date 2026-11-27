@@ -1,33 +1,58 @@
 site_name: Learning
-site_description: Персональные курсы для закрепления материала
+site_description: Один заход — одна домашка
+site_url: http://127.0.0.1:8010/
 docs_dir: docs
+
+copyright: Личный тренажёр для домашек
 
 theme:
   name: material
+  custom_dir: overrides
   language: ru
+  logo: assets/logo.svg
+  favicon: assets/favicon.svg
+  font:
+    text: Nunito
+    code: JetBrains Mono
   features:
     - navigation.instant
-    - navigation.top
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
-    - toc.follow
+    - navigation.indexes
+    - navigation.prune
+    - navigation.top
     - search.suggest
     - search.highlight
+    - search.share
     - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.tooltips
+    - header.autohide
   palette:
     - scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: Светлая тема
     - scheme: default
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: Тёмная тема
 
+plugins:
+  - search:
+      lang: ru
+      separator: '[\s\u200b\-]'
+
 markdown_extensions:
+  - abbr
   - admonition
   - attr_list
   - md_in_html
@@ -35,14 +60,169 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.details
+  - pymdownx.arithmatex:
+      generic: true
+      smart_dollar: true
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      base_path: docs
+      auto_append:
+        - includes/abbreviations.md
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
-          class: mermaid
+          class: mermaid-src
           format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: sqlplay
+          class: sqlplay
+          format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: mssqllocal
+          class: mssqllocal
+          format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: pyplay
+          class: pyplay
+          format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: cppplay
+          class: cppplay
+          format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: jsplay
+          class: jsplay
+          format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: quiz
+          class: quiz
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra_css:
+  - stylesheets/extra.css
+  - stylesheets/auth.css
+  - stylesheets/playground.css
+  - stylesheets/quiz.css
+  - stylesheets/service.css
+  - stylesheets/mission.css
+  - stylesheets/review.css
+  - stylesheets/course-shell.css
+  - stylesheets/practice-dock.css
+  - stylesheets/app.css
+  - stylesheets/course-palette.css
+  - stylesheets/liquid-glass.css
+  - stylesheets/motion.css
+  - stylesheets/farm.css
+  - stylesheets/mssql-local.css
+  - javascripts/vendor/codemirror/lib/codemirror.css
+  - javascripts/vendor/codemirror/addon/hint/show-hint.css
+
+extra_javascript:
+  - javascripts/auth.js
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+  - javascripts/vendor/codemirror/lib/codemirror.js
+  - javascripts/vendor/codemirror/mode/sql/sql.js
+  - javascripts/vendor/codemirror/mode/python/python.js
+  - javascripts/vendor/codemirror/addon/edit/matchbrackets.js
+  - javascripts/vendor/codemirror/addon/edit/closebrackets.js
+  - javascripts/vendor/codemirror/addon/hint/show-hint.js
+  - javascripts/vendor/codemirror/addon/comment/comment.js
+  - javascripts/vendor/codemirror/addon/display/placeholder.js
+  - javascripts/vendor/codemirror/addon/selection/active-line.js
+  - javascripts/sql-playground.js
+  - javascripts/mssql-local.js
+  - javascripts/igu-sandbox.js
+  - javascripts/content-layer.js
+  - javascripts/quiz.js
+  - javascripts/mission.js
+  - javascripts/review.js
+  - javascripts/course-shell.js
+  - javascripts/practice-dock.js
+  - javascripts/sandbox-tabs.js
+  - javascripts/journal.js
+  - javascripts/audio-seek.js
+  - javascripts/motion.js
+  - javascripts/farm.js
+  - javascripts/course-cards.js
+  - javascripts/mermaid-precapture.js
+  - javascripts/vendor/mermaid/mermaid.min.js
+  - javascripts/mermaid-init.js
+
+
+nav:
+  - Сегодня: index.md
+  - Записи: notes/index.md
+  - Курсы:
+      - courses/index.md
+      - Анализ данных:
+          - "S&P 500: прогноз как решение": s-p-500-avtoregressiya/index.md
+          - "ЦПТ, квантили и гипотезы": cpt-kvantili-i-gipotezy/index.md
+          - "Где спрятался Во": batman-klasterizaciya/index.md
+          - "Средневековье: рейтинг": srednevekove/index.md
+          - "Кластеризуем": klasterizuem/index.md
+      - Искусственный интеллект:
+          - "Оптимизаторы: выбор под задачу": torch-optimizatory/index.md
+          - "20 newsgroups: исследование": 20newsgroups-klasterizaciya/index.md
+          - "Кошки и собаки": koshki-sobaki-klassifikatory/index.md
+      - SQL:
+          - "Строки без пары: left join": sql/start/index.md
+          - "Домашка: базовый скрипт": sql/domashka/index.md
+          - "Исправляем под ТЗ": sql/fix-tz/index.md
+          - "Миграции и нормализация": sql/migraciya-i-normalizaciya/index.md
+          - "Анализ данных": sql/analiz-dannyh/index.md
+          - "PL/pgSQL и метаданные": sql/plpgsql/index.md
+          - "Интерполяция": sql/interpolyaciya/index.md
+          - "ДЗ 5: разбор построчно": sql/homework-five/index.md
+          - "ДЗ 5: каждая строка": sql/homework-five/every-line.md
+          - "ДЗ 6: ошибки и Метео": sql/homework-six/index.md
+          - "Справочники Таблиц 2 и 3: ДМК и ВР": sql/spravochniki-tablic-2-3/index.md
+          - "Итоговый расчёт": sql/itogovyy-raschet/index.md
+          - "Итоговый расчёт: репетитор": sql/itogovyy-raschet/tutor.md
+          - "Итоговый расчёт: ответы": sql/itogovyy-raschet/answers.md
+          - "Front: разведка базы": sql/front-razvedka/index.md
+          - "Front: ответы": sql/front-razvedka/answers.md
+          - "Front: полный код для сверки": sql/front-razvedka/reference.md
+          - "Front → OLAP: перенос": sql/olap-perenos/index.md
+          - "Front → OLAP: ответы": sql/olap-perenos/answers.md
+          - "Front → OLAP: шпаргалка": sql/olap-perenos/cheatsheet.md
+          - "Факт закупки: PL/pgSQL": sql/fact-purchase/index.md
+      - Веб-программирование:
+          - "Строки, массивы и объекты": js-stroki-massivy-objekty/index.md
+      - Подготовка к зачёту:
+          - "ИИ: карта": learn/ai/index.md
+          - "ИИ: ML-фундамент": learn/ai/foundation/index.md
+          - "ИИ: Регулярные выражения": learn/ai/regex/index.md
+          - "ИИ: Деревья решений": learn/ai/trees/index.md
+          - "ИИ: SVM": learn/ai/svm/index.md
+          - "ИИ: Ансамбли": learn/ai/ensembles/index.md
+          - "ИИ: MLP и backprop": learn/ai/mlp/index.md
+          - "ИИ: Torch и Keras": learn/ai/frameworks/index.md
+          - "ИИ: CNN": learn/ai/cnn/index.md
+          - "ИИ: Текст: BoW и TF-IDF": learn/ai/text-bow/index.md
+          - "ИИ: word2vec и BPE": learn/ai/word2vec/index.md
+          - "ИИ: RNN и LSTM": learn/ai/rnn/index.md
+          - "ИИ: NER и spaCy": learn/ai/ner/index.md
+          - "ИИ: GAN": learn/ai/gan/index.md
+          - "Анализ данных: карта": learn/da/index.md
+          - "Анализ данных: EDA и данные": learn/da/eda/index.md
+          - "Анализ данных: Вероятность": learn/da/probability/index.md
+          - "Анализ данных: ЦПТ и интервалы": learn/da/clt/index.md
+          - "Анализ данных: Гипотезы": learn/da/hypotheses/index.md
+          - "Анализ данных: Доли и множественные проверки": learn/da/proportions/index.md
+          - "Анализ данных: Кластеризация": learn/da/clustering/index.md
+          - "Анализ данных: Снижение размерности": learn/da/dimensionality/index.md
+          - "Анализ данных: Регрессия": learn/da/regression/index.md
+          - "Анализ данных: Временные ряды": learn/da/time-series/index.md
+          - "Анализ данных: Сигналы": learn/da/signals/index.md
+          - "Анализ данных: Автоэнкодеры": learn/da/autoencoders/index.md
+          - "Анализ данных: Аномалии": learn/da/anomalies/index.md
+  - Практика: sandbox/index.md
+  - Повторение: review/index.md
+  - Журнал: journal/index.md
+  - Ещё:
+      - more/index.md
+      - "Blueprint сервиса": standards/service-blueprint/index.md
+      - Ферма: farm/index.md
+      - Архив курсов: archive/index.md

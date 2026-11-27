@@ -1,0 +1,67 @@
+/* Локальная T-SQL задача (VS Code + MSSQL), см. javascripts/mssql-local.js */
+
+.mssql-local {
+  border-color: rgba(28, 176, 246, .45);
+  box-shadow: 0 3px 0 rgba(28, 176, 246, .2);
+}
+
+.mssql-local .sql-bar {
+  background: rgba(28, 176, 246, .1);
+}
+
+.mssql-code {
+  margin: 0;
+  padding: .6rem .8rem;
+  overflow-x: auto;
+  font-size: .72rem;
+  line-height: 1.5;
+  background: var(--md-code-bg-color);
+  tab-size: 4;
+}
+
+.mssql-paste {
+  display: grid;
+  gap: .35rem;
+  padding: .6rem .7rem;
+}
+
+.mssql-paste-label {
+  font-size: .7rem;
+  font-weight: 700;
+}
+
+.mssql-paste-area {
+  width: 100%;
+  min-height: 3.5rem;
+  padding: .4rem .5rem;
+  font-family: var(--md-code-font-family);
+  font-size: .7rem;
+  color: var(--md-default-fg-color);
+  background: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .4rem;
+  resize: vertical;
+}
+
+.mssql-paste .sql-btn {
+  justify-self: start;
+}
+
+.mssql-local .sql-btn:focus-visible,
+.mssql-paste-area:focus-visible {
+  outline: 2px solid var(--duo-blue, #1cb0f6);
+  outline-offset: 2px;
+}
+
+.fig-todo {
+  margin: 1rem 0;
+  padding: .8rem 1rem;
+  border: 2px dashed var(--md-default-fg-color--lighter);
+  border-radius: .5rem;
+  font-size: .75rem;
+  color: var(--md-default-fg-color--light);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mssql-local .sql-btn { transition: none; }
+}

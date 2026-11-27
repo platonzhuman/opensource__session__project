@@ -1,0 +1,307 @@
+/* ==========================================================================
+   Course shell — курс вокруг одного шага.
+   Слева программа, в центре шаг, справа прогресс и повторение.
+   ========================================================================== */
+
+.mission-page .md-grid {
+  max-width: 1440px;
+}
+
+.mission-page .md-content__inner {
+  max-width: none;
+  padding-top: 0;
+}
+
+.mission-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 860px) 250px;
+  gap: 1.4rem;
+  align-items: start;
+  justify-content: center;
+  padding: .5rem 0 4rem;
+}
+
+.mission-main {
+  min-width: 0;
+}
+
+.mission-layout .mission {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding-bottom: 0;
+}
+
+/* ---------- left: course outline ---------- */
+
+.mission-rail {
+  position: sticky;
+  top: 5.6rem;
+  min-width: 0;
+}
+
+.mission-rail__back {
+  display: inline-flex;
+  margin-bottom: 1rem;
+  color: var(--svc-muted) !important;
+  font-size: .72rem;
+  font-weight: 800;
+  text-decoration: none !important;
+}
+
+.mission-rail__back:hover {
+  color: var(--svc-green) !important;
+}
+
+.mission-rail__kicker {
+  color: var(--svc-green);
+  font-size: .62rem;
+  font-weight: 900;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.mission-rail__title {
+  margin: .35rem 0 1rem;
+  color: var(--svc-text);
+  font-size: .92rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.mission-outline {
+  display: grid;
+  gap: .18rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mission-outline__item {
+  display: flex;
+  gap: .55rem;
+  width: 100%;
+  padding: .55rem .55rem;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--svc-muted);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background .12s ease, border-color .12s ease, color .12s ease;
+}
+
+.mission-outline__item:hover {
+  background: var(--svc-card);
+  color: var(--svc-text);
+}
+
+.mission-outline__item.is-active {
+  border-color: rgba(88, 204, 2, .28);
+  background: rgba(88, 204, 2, .09);
+  color: var(--svc-text);
+}
+
+.mission-outline__item.is-done:not(.is-active) {
+  color: var(--svc-text);
+}
+
+.mission-outline__num {
+  display: grid;
+  flex: 0 0 1.4rem;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-top: .08rem;
+  border-radius: 50%;
+  background: var(--svc-card-2);
+  color: var(--svc-muted);
+  font-size: .58rem;
+  font-weight: 900;
+}
+
+.mission-outline__item.is-active .mission-outline__num {
+  background: var(--svc-green);
+  color: var(--svc-green-ink);
+}
+
+.mission-outline__item.is-done .mission-outline__num {
+  background: rgba(88, 204, 2, .18);
+  color: var(--svc-green);
+}
+
+.mission-outline__body {
+  display: block;
+  min-width: 0;
+}
+
+.mission-outline__label {
+  display: block;
+  overflow: hidden;
+  color: inherit;
+  font-size: .56rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mission-outline__heading {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: .12rem;
+  color: var(--svc-text);
+  font-size: .7rem;
+  font-weight: 800;
+  line-height: 1.25;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.mission-outline__item:not(.is-active) .mission-outline__heading {
+  color: var(--svc-muted);
+}
+
+/* ---------- right: progress / review ---------- */
+
+.mission-side {
+  position: sticky;
+  top: 5.6rem;
+  display: grid;
+  gap: .65rem;
+  min-width: 0;
+}
+
+.mission-side__card {
+  padding: .85rem;
+  border: 1px solid var(--svc-line);
+  border-radius: var(--svc-radius-sm);
+  background: var(--svc-card);
+}
+
+.mission-side__card--quiet {
+  background: transparent;
+}
+
+.mission-side__eyebrow {
+  color: var(--svc-muted);
+  font-size: .58rem;
+  font-weight: 900;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.mission-side__muted {
+  color: var(--svc-muted);
+  font-size: .72rem;
+  line-height: 1.45;
+}
+
+.shell-ring {
+  --pct: 0;
+  position: relative;
+  display: grid;
+  width: 5.4rem;
+  height: 5.4rem;
+  margin: .75rem auto .65rem;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(var(--svc-green) calc(var(--pct) * 1%), var(--svc-card-2) 0);
+}
+
+.shell-ring::after {
+  content: "";
+  position: absolute;
+  inset: .5rem;
+  border-radius: 50%;
+  background: var(--svc-card);
+}
+
+.shell-ring b {
+  position: relative;
+  z-index: 1;
+  color: var(--svc-text);
+  font-size: .8rem;
+  font-weight: 900;
+}
+
+.mission-side__card .button {
+  width: 100%;
+  margin-top: .65rem;
+}
+
+.mission-side__card .button[hidden] {
+  display: none;
+}
+
+.mission-side__today {
+  padding: .2rem .2rem;
+  color: var(--svc-muted) !important;
+  font-size: .72rem;
+  font-weight: 800;
+  text-decoration: none !important;
+}
+
+.mission-side__today:hover {
+  color: var(--svc-green) !important;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1180px) {
+  .mission-layout {
+    grid-template-columns: 190px minmax(0, 1fr);
+  }
+
+  .mission-side {
+    display: none;
+  }
+
+  .mission-page .md-grid {
+    max-width: 1120px;
+  }
+}
+
+@media (max-width: 860px) {
+  .mission-layout {
+    display: block;
+    padding-top: 0;
+  }
+
+  .mission-rail {
+    position: static;
+    margin-bottom: .8rem;
+    padding: .8rem;
+    border: 1px solid var(--svc-line);
+    border-radius: var(--svc-radius-sm);
+    background: var(--svc-card);
+  }
+
+  .mission-rail__back {
+    margin-bottom: .55rem;
+  }
+
+  .mission-rail__title {
+    margin-bottom: .65rem;
+  }
+
+  .mission-outline {
+    display: flex;
+    gap: .35rem;
+    overflow-x: auto;
+    padding-bottom: .1rem;
+  }
+
+  .mission-outline__item {
+    flex: 0 0 170px;
+    border-color: var(--svc-line);
+    background: var(--svc-bg-2);
+  }
+
+  .mission-layout .mission {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,352 @@
+/* ==========================================================================
+   Motion & polish. Compositor-friendly: transform / opacity only.
+   ========================================================================== */
+
+:root {
+  --motion-fast: 160ms;
+  --motion-base: 280ms;
+  --motion-slow: 620ms;
+  --motion-ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  inset: -25%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(88, 204, 2, .12), transparent 28%),
+    radial-gradient(circle at 82% 8%, rgba(28, 176, 246, .10), transparent 30%),
+    radial-gradient(circle at 55% 88%, rgba(206, 130, 255, .08), transparent 32%);
+  animation: ambient-drift 22s ease-in-out infinite alternate;
+}
+
+@keyframes ambient-drift {
+  from { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+  to { transform: translate3d(2%, 1.5%, 0) scale(1.06); }
+}
+
+/* ---------- reveal on scroll ---------- */
+
+.motion-ready .motion-reveal {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+}
+
+.motion-ready .motion-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition:
+    opacity var(--motion-slow) var(--motion-ease),
+    transform var(--motion-slow) var(--motion-ease);
+  transition-delay: calc(var(--reveal-index, 0) * 55ms);
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -5rem;
+  right: 4%;
+  width: 22rem;
+  height: 22rem;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(28, 176, 246, .17), transparent 68%);
+  filter: blur(10px);
+  animation: hero-float 14s ease-in-out infinite alternate;
+}
+
+@keyframes hero-float {
+  from { transform: translate3d(0, 0, 0) scale(.92); opacity: .55; }
+  to { transform: translate3d(-2rem, 1.5rem, 0) scale(1.08); opacity: .9; }
+}
+
+.hero__title {
+  background: linear-gradient(100deg, var(--svc-text) 12%, #b8ff7d 54%, var(--svc-blue) 96%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-wrap: balance;
+}
+
+.hero__kicker {
+  animation: fade-up var(--motion-slow) var(--motion-ease) both;
+}
+
+.hero__lead {
+  animation: fade-up var(--motion-slow) var(--motion-ease) 80ms both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* ---------- cards: lift + sheen ---------- */
+
+.course-card,
+.dash-card,
+.review-deck,
+.stat {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease),
+    background-color var(--motion-base) var(--motion-ease),
+    box-shadow var(--motion-base) var(--motion-ease);
+}
+
+.course-card:hover,
+.review-deck:hover,
+.stat:hover {
+  transform: translate3d(0, -3px, 0);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .22);
+}
+
+.course-card--featured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(88, 204, 2, .2), rgba(28, 176, 246, .18), rgba(206, 130, 255, .14));
+  opacity: .35;
+  animation: featured-glow 5s ease-in-out infinite alternate;
+}
+
+@keyframes featured-glow {
+  from { opacity: .2; }
+  to { opacity: .55; }
+}
+
+.course-card::after {
+  content: "";
+  position: absolute;
+  inset: -40% -60%;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, .08) 50%, transparent 65%);
+  transform: translate3d(-55%, 0, 0) rotate(8deg);
+  transition: transform 700ms var(--motion-ease);
+}
+
+.course-card:hover::after {
+  transform: translate3d(55%, 0, 0) rotate(8deg);
+}
+
+.course-card > *,
+.dash-card > *,
+.review-deck > *,
+.stat > * {
+  position: relative;
+  z-index: 1;
+}
+
+.course-card:focus-visible,
+.review-deck:focus-visible,
+.stat:focus-visible {
+  outline: 2px solid var(--svc-green);
+  outline-offset: 3px;
+}
+
+/* ---------- buttons / links ---------- */
+
+.button,
+.mission-btn,
+.quiz-option,
+.practice-tab,
+.practice-dock {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.button:hover,
+.mission-btn:hover {
+  transform: translate3d(0, -2px, 0);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .18);
+}
+
+.button:active,
+.mission-btn:active {
+  transform: translate3d(0, 0, 0) scale(.98);
+}
+
+.button:focus-visible,
+.mission-btn:focus-visible,
+.practice-tab:focus-visible,
+.practice-dock:focus-visible,
+.md-typeset a:focus-visible,
+.quiz-input:focus-visible,
+.mission-textarea:focus-visible,
+.sql-textarea:focus-visible {
+  outline: 2px solid var(--svc-blue);
+  outline-offset: 3px;
+}
+
+/* ---------- nav ---------- */
+
+.md-tabs__link {
+  position: relative;
+}
+
+.md-tabs__link--active::after,
+.md-tabs__item--active .md-tabs__link::after {
+  content: "";
+  position: absolute;
+  right: .85rem;
+  bottom: .15rem;
+  left: .85rem;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--svc-green), var(--svc-blue));
+  animation: nav-line-in 360ms var(--motion-ease) both;
+}
+
+@keyframes nav-line-in {
+  from { opacity: 0; transform: scaleX(.2); }
+  to { opacity: 1; transform: scaleX(1); }
+}
+
+/* ---------- progress / stats ---------- */
+
+.stat b,
+.mission-count,
+.shell-ring b,
+.course-card__meta,
+.quiz-counter {
+  font-variant-numeric: tabular-nums;
+}
+
+.shell-ring {
+  animation: ring-pulse 5s ease-in-out infinite;
+}
+
+@keyframes ring-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.025); }
+}
+
+/* ---------- quiz feedback ---------- */
+
+.quiz-feedback.is-ok,
+.quiz-feedback.is-bad {
+  animation: feedback-in 240ms var(--motion-ease) both;
+}
+
+@keyframes feedback-in {
+  from { opacity: 0; transform: translate3d(0, 5px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.quiz-score__ring {
+  animation: score-pop 420ms var(--motion-ease) both;
+}
+
+@keyframes score-pop {
+  from { opacity: 0; transform: scale(.9) rotate(-8deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+.quiz-option.is-correct {
+  animation: correct-pop 320ms var(--motion-ease) both;
+}
+
+.quiz-option.is-wrong {
+  animation: wrong-shake 280ms ease both;
+}
+
+@keyframes correct-pop {
+  0% { transform: scale(1); }
+  55% { transform: scale(1.015); }
+  100% { transform: scale(1); }
+}
+
+@keyframes wrong-shake {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(-3px, 0, 0); }
+  75% { transform: translate3d(3px, 0, 0); }
+}
+
+/* ---------- mission step entrance ---------- */
+
+.mission-step {
+  animation: step-enter 320ms var(--motion-ease) both;
+}
+
+@keyframes step-enter {
+  from { opacity: 0; transform: translate3d(0, 12px, 0) scale(.995); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* ---------- practice dock ---------- */
+
+.practice-dock {
+  animation: dock-in 500ms var(--motion-ease) 600ms both;
+}
+
+@keyframes dock-in {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* ---------- page transitions ---------- */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: page-out 140ms ease both;
+}
+
+::view-transition-new(root) {
+  animation: page-in 240ms ease both;
+}
+
+@keyframes page-out {
+  to { opacity: 0; transform: scale(.995); }
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: scale(1.005); }
+}
+
+/* ---------- accessibility ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .motion-ready .motion-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

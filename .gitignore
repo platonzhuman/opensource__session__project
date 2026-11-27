@@ -1,3 +1,35 @@
 site/
 .cache/
 .DS_Store
+.venv/
+
+# Python / tests
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Node / desktop build artifacts
+node_modules/
+desktop/
+desktop/dist/
+desktop/node_modules/
+desktop/screenshots/
+
+# External artifacts, not part of the Learning site
+BOT_HQ/
+
+# Private learner/teacher data — not for public GitHub
+learner/
+teachers/
+
+*.log
+*.tmp
+*.swp
+
+.opencode/skills/
+
+# Tutor bridge runtime drops (keep directory placeholders)
+learner/tutor-inbox/*
+!learner/tutor-inbox/.gitkeep
+learner/tutor-outbox/*
+!learner/tutor-outbox/.gitkeep
