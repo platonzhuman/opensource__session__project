@@ -1,0 +1,262 @@
+/* ==========================================================================
+   Course player + course index: сетка, карточки, отступы.
+   Только эти две страницы; палитра и тема не меняются.
+   ========================================================================== */
+
+/* ---------- «К началу» больше не висит поверх заголовка ---------- */
+
+.md-top {
+  top: auto !important;
+  bottom: 5.6rem !important;
+  left: auto !important;
+  right: 1.4rem !important;
+  transform: none !important;
+  z-index: 7;
+}
+
+.mission-page .md-top {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .md-top {
+    bottom: 5.2rem !important;
+    right: 1rem !important;
+  }
+}
+
+/* ---------- Левая программа и правая колонка ---------- */
+
+.mission-page .mission-rail,
+.mission-page .mission-side {
+  top: 10.6rem;
+}
+
+.mission-page .mission-rail {
+  padding: .9rem;
+  border: 1px solid var(--svc-line);
+  border-radius: var(--svc-radius);
+  background: var(--svc-card);
+  max-height: calc(100vh - 11.6rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.mission-page .mission-rail__back {
+  margin-bottom: .7rem;
+}
+
+.mission-page .mission-side__card {
+  padding: .95rem;
+  border-radius: 16px;
+}
+
+.mission-page .mission-side__card:first-child {
+  border-color: rgba(88, 204, 2, .32);
+  background:
+    radial-gradient(120% 120% at 100% 0%, rgba(88, 204, 2, .12), transparent 60%),
+    var(--svc-card);
+}
+
+/* ---------- Один шаг как цельный плеер ---------- */
+
+.mission-page .mission {
+  background: var(--svc-card);
+  border: 1px solid var(--svc-line);
+  border-radius: var(--svc-radius);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .18);
+  overflow: hidden;
+  padding-bottom: 0;
+}
+
+.mission-page .mission-top {
+  position: static;
+  padding: .95rem 1.35rem;
+  background: var(--svc-card-2);
+  border-bottom: 1px solid var(--svc-line);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.mission-page .mission-step {
+  margin: 0;
+  padding: 1.5rem 1.35rem 1.2rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.mission-page .mission-step > h2:first-child {
+  margin-top: 0;
+}
+
+.mission-page .mission-controls {
+  position: static;
+  margin: 0;
+  padding: .9rem 1.35rem 1.1rem;
+  background: transparent;
+  border-top: 1px solid var(--svc-line);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.mission-page .mission-hint {
+  margin: 0;
+  padding: .8rem 1.35rem;
+  border-top: 1px solid var(--svc-line);
+  background: var(--svc-card-2);
+  font-size: .7rem;
+}
+
+.mission-page .mission-done {
+  margin: 0 1.35rem 1.2rem;
+}
+
+/* Кнопки шага — одна основная, одна тихая */
+.mission-page .mission-btn--primary {
+  min-height: 2.9rem;
+  padding: 0 1.35rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--svc-green);
+  color: var(--svc-green-ink);
+  font-weight: 900;
+  box-shadow: 0 10px 24px rgba(88, 204, 2, .28);
+}
+
+.mission-page .mission-btn--ghost {
+  min-height: 2.9rem;
+  padding: 0 1.1rem;
+  border: 1px solid var(--svc-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--svc-muted);
+}
+
+/* ---------- Страница курса: панели и карточки ---------- */
+
+.md-sidebar--primary .md-sidebar__scrollwrap,
+.md-sidebar--secondary .md-sidebar__scrollwrap {
+  padding: .45rem;
+  border: 1px solid var(--svc-line);
+  border-radius: 16px;
+  background: var(--svc-card);
+}
+
+.md-sidebar--secondary .md-sidebar__scrollwrap {
+  padding: .65rem .75rem;
+}
+
+/* Мягкий край: список не выглядит обрезанным на середине строки */
+.md-sidebar--primary .md-sidebar__scrollwrap {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+}
+
+.md-sidebar--primary .md-nav__link {
+  padding: .34rem .5rem;
+  border-radius: 9px;
+}
+
+.md-typeset h1 {
+  letter-spacing: -.045em;
+}
+
+@media (max-width: 1023px) {
+  .mission-page .mission-rail,
+  .mission-page .mission-side {
+    position: static;
+    top: auto;
+    max-height: none;
+  }
+
+  .mission-page .mission-rail {
+    padding: .75rem;
+  }
+
+  .md-top {
+    display: none;
+  }
+}
+
+/* ---------- Доработки после первого прохода ---------- */
+
+/* Подпись шага в рельсе не обрезается в «ШАГ 1 · ЖИЗНЕ…» */
+.mission-page .mission-outline__label {
+  display: none;
+}
+
+.mission-page .mission-outline__heading {
+  -webkit-line-clamp: 3;
+}
+
+/* Подсказка шага — на всю ширину карточки, а не 62ch */
+.mission-page .mission-hint {
+  max-width: none;
+}
+
+/* Заголовок раздела в сайдбаре не наезжает на список */
+.md-sidebar--primary .md-nav__container {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--svc-card);
+}
+
+/* Содержание: карточка по высоте пунктов, а не пустая колонка */
+.md-sidebar--secondary .md-sidebar__scrollwrap {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.md-sidebar--secondary .md-nav--secondary {
+  padding: .65rem .75rem;
+  border: 1px solid var(--svc-line);
+  border-radius: 16px;
+  background: var(--svc-card);
+}
+
+.md-sidebar--secondary .md-nav__title {
+  padding: 0 0 .4rem;
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--svc-muted);
+}
+
+/* Список шагов: Material задаёт ol display: flow-root и перебивал grid */
+.md-typeset .mission-outline {
+  display: grid;
+  gap: .18rem;
+}
+
+@media (max-width: 860px) {
+  .mission-page .mission-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mission-page .mission-main {
+    order: 1;
+  }
+
+  .mission-page .mission-rail {
+    order: 2;
+    margin-bottom: 0;
+  }
+
+  .md-typeset .mission-outline {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: .35rem;
+    overflow-x: auto;
+    padding-bottom: .2rem;
+  }
+
+  .mission-page .mission-outline__item {
+    flex: 0 0 160px;
+  }
+}

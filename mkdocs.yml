@@ -112,6 +112,7 @@ extra_css:
   - stylesheets/liquid-glass.css
   - stylesheets/motion.css
   - stylesheets/mssql-local.css
+  - stylesheets/course-pages.css
   - javascripts/vendor/codemirror/lib/codemirror.css
   - javascripts/vendor/codemirror/addon/hint/show-hint.css
 
@@ -143,6 +144,7 @@ extra_javascript:
   - javascripts/mermaid-precapture.js
   - javascripts/vendor/mermaid/mermaid.min.js
   - javascripts/mermaid-init.js
+  - javascripts/sidebar-top.js
 
 
 nav:
